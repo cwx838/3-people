@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>人物互动 - 克林顿一家</title>
+  <style>
+    /* 图片容器样式：让图片占满屏幕，方便定位点击区域 */
+    .image-container {
+      position: relative; 
+      width: 100vw; 
+      height: 100vh; 
+      overflow: hidden; 
+    }
+    /* 背景图片样式：覆盖容器 */
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; 
+    }
+    /* 人物点击区域样式：透明层 + 调试用边框（可改颜色、完成后删除） */
+    .click-area {
+      position: absolute; 
+      background-color: rgba(0,0,0,0); 
+      cursor: pointer; 
+      outline: 2px solid orange; /* 橙色边框，方便调试点击区域，可自定义颜色 */
+    }
+    /* 介绍弹窗样式 */
+    .popup {
+      position: fixed; 
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%); 
+      background: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      z-index: 999; 
+      max-width: 80%; 
+      display: none; 
+    }
+    /* 弹窗关闭按钮样式 */
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- 图片容器：引入你的人物照片（确保和HTML同目录） -->
+  <div class="image-container">
+    <img src="179e8722e648a4df40bb2db84e58080.jpg" alt="克林顿一家">
+    
+    <!-- 人物1：希拉里·克林顿（左侧人物，需调整坐标覆盖实际位置） -->
+    <div 
+      class="click-area" 
+      data-person="hillary" 
+      style="top: 100px; left: 450px; width: 240px; height: 340px;"
+    ></div>
+    
+    <!-- 人物2：比尔·克林顿（中间人物，需调整坐标覆盖实际位置） -->
+    <div 
+      class="click-area" 
+      data-person="bill" 
+      style="top: 80px; left: 750px; width: 210px; height: 310px;"
+    ></div>
+
+    <!-- 人物3：切尔西·克林顿（右侧人物，需调整坐标覆盖实际位置） -->
+    <div 
+      class="click-area" 
+      data-person="chelsea" 
+      style="top: 100px; left: 1200px; width: 190px; height: 290px;"
+    ></div>
+  </div>
+
+  <!-- 介绍弹窗 -->
+  <div class="popup" id="popup">
+    <span class="close-btn" onclick="closePopup()">×</span>
+    <p id="intro-text"></p>
+  </div>
+
+  <!-- 交互逻辑：点击区域触发弹窗显示对应介绍 -->
+  <script>
+    // 人物介绍数据（可根据需求修改、扩展）
+    const introData = {
+      hillary: " 希拉里·黛安·罗德姆·克林顿：美国知名政治家、外交官 。曾担任美国国务卿、纽约州联邦参议员等职务，在民主党内影响力深远，长期活跃于美国政治舞台，在政策主张、选举等政治活动中扮演重要角色，也因政治生涯中的诸多事件备受关注与争议 。",
+      bill: "比尔·克林顿：美国第42任总统 。执政期间，美国经历一段较长的经济繁荣期，在国内政策（如医疗改革尝试等）、外交等方面有一系列举措，其个人政治生涯也因一些争议事件（如莱温斯基丑闻等）成为公众讨论焦点，卸任后仍在国际事务、公益等领域有一定发声 。",
+      chelsea: "切尔西·维多利亚·克林顿：比尔·克林顿和希拉里·克林顿的女儿 。她活跃于公益、教育等领域，参与多项慈善活动与社会项目，凭借自身身份与努力，在公共事务等方面发挥一定作用，也常因父母的政治光环受到公众关注 。"
+    };
+
+    // 获取 DOM 元素
+    const clickAreas = document.querySelectorAll('.click-area');
+    const popup = document.getElementById('popup');
+    const introText = document.getElementById('intro-text');
+
+    // 绑定点击事件：点击人物区域显示对应介绍
+    clickAreas.forEach(area => {
+      area.onclick = function() {
+        const person = this.getAttribute('data-person');
+        introText.innerText = introData[person]; 
+        popup.style.display = 'block'; 
+      }
+    });
+
+    // 关闭弹窗函数
+    function closePopup() {
+      popup.style.display = 'none';
+    }
+  </script>
+</body>
+</html>
